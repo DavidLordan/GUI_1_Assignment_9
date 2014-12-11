@@ -22,6 +22,13 @@
  active.
  
  
+ The majority of this code is based on the examples provided by Curran Kelleher
+ which can be found at the following URL: 
+ http://curran.github.io/screencasts/introToAngular/exampleViewer/#/
+
+ Other parts of the code were taken from the sample code provided by 
+ Prof. Jesse Heines for his GUI Programming 1 course at UMass Lowell.
+ 
  This file includes several custom function and makes extensive use of the AngularJS
  framework to control the page's behavior. 
  
@@ -72,7 +79,7 @@ assign9.controller("assign9Ctrl", function ($scope, $http) {
             $scope.myList.push(newSong);
 
             // As the song lengths are not stord in a easy to interpret format, some
-            // parsing must be done. Song lengths are analyzed and added to the total time. 
+            // parsing must be done. Song lenghts are converted total seconds and added to the total time. 
             var str = newSong.Length.toString();
             var front = str.substring(0, str.length - 2);
             str = str.substring(str.length - 2, str.length);
@@ -99,7 +106,7 @@ assign9.controller("assign9Ctrl", function ($scope, $http) {
             }
 
             // The song calling the function is removed from the setlist array. The length
-            // of the song is parsed, analyized and subtracted from the total length. 
+            // of the song is calculated in total seconds and subtracted from the total length. 
             $scope.myList.splice(index, 1);
             var str = newSong.Length.toString();
             var front = str.substring(0, str.length - 2);
@@ -261,10 +268,12 @@ assign9.filter("lengthFilter", function () {
     };
 });
 
-//Another custom filter that calulates the total time.
+// Another custom filter that calulates the total time. As the total time is saved in
+// seconds, a short algorithm is used to calculate the total hours, minutes and remaining
+// seconds. Again, this soft of filter is likley to be bulit in to Angular, but it seemed
+// like a good thing to practice. 
 assign9.filter("timeFilter", function () {
     return function (time) {
-
 
         var seconds = time % 60;
         var minutes = (time - seconds) / 60;
@@ -285,5 +294,7 @@ assign9.filter("timeFilter", function () {
         }
     };
 });
+
+
 
 
